@@ -468,5 +468,6 @@ pumas = subset(pumas, State=="Maryland")
 pumas = st_transform(pumas, crs=4326)
 
 pumas = merge(pumas, puma_dat)
+pumas$Name = gsub(" PUMA", "", pumas$Name)
 simple_pumas = st_simplify(pumas, preserveTopology = T, dTolerance = 10)
 st_write(simple_pumas, "outputs/pumas.geojson", delete_dsn = T)
