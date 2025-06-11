@@ -176,7 +176,7 @@ puma_child_poverty_counts = svyby(
 puma_child_poverty_counts$se =
   puma_child_poverty_counts$se * qnorm(0.975) # SE to 95% MOE
 names(puma_child_poverty_counts) = c(
-  "GEOID", "child_poverty_count", "child_poverty_count_moe"
+  "GEOID", "child_poverty_baseline_count", "child_poverty_baseline_count_moe"
 )
 
 puma_child_poverty_percents = svyby(
@@ -188,7 +188,7 @@ puma_child_poverty_percents = svyby(
 puma_child_poverty_percents$se =
   puma_child_poverty_percents$se * qnorm(0.975) # SE to 95% MOE
 names(puma_child_poverty_percents) = c(
-  "GEOID", "child_poverty_percent", "child_poverty_percent_moe"
+  "GEOID", "child_poverty_baseline_percent", "child_poverty_baseline_percent_moe"
 )
 merge_list[[merge_index]] = puma_child_poverty_percents
 merge_index = merge_index + 1
@@ -290,7 +290,7 @@ puma_youth_poverty_counts = svyby(
 puma_youth_poverty_counts$se =
   puma_youth_poverty_counts$se * qnorm(0.975) # SE to 95% MOE
 names(puma_youth_poverty_counts) = c(
-  "GEOID", "youth_poverty_count", "youth_poverty_count_moe"
+  "GEOID", "youth_poverty_baseline_count", "youth_poverty_baseline_count_moe"
 )
 merge_list[[merge_index]] = puma_youth_poverty_counts
 merge_index = merge_index + 1
@@ -304,7 +304,7 @@ puma_youth_poverty_percents = svyby(
 puma_youth_poverty_percents$se =
   puma_youth_poverty_percents$se * qnorm(0.975) # SE to 95% MOE
 names(puma_youth_poverty_percents) = c(
-  "GEOID", "youth_poverty_percent", "youth_poverty_percent_moe"
+  "GEOID", "youth_poverty_baseline_percent", "youth_poverty_baseline_percent_moe"
 )
 merge_list[[merge_index]] = puma_youth_poverty_percents
 merge_index = merge_index + 1
