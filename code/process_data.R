@@ -280,6 +280,35 @@ names(puma_child_poverty_snap_med_percents) = c(
 merge_list[[merge_index]] = puma_child_poverty_snap_med_percents
 merge_index = merge_index + 1
 
+## Difference from baseline and both SNAP and Medicaid work requirements child
+puma_child_poverty_diff_counts = svyby(
+  ~I(SPMPOV_LESS_SNAP_LESS_MED-SPMPOV),
+  FUN=svytotal,
+  by=~PUMA_GEOID,
+  child_svy,
+)
+puma_child_poverty_diff_counts$se =
+  puma_child_poverty_diff_counts$se * qnorm(0.975) # SE to 95% MOE
+names(puma_child_poverty_diff_counts) = c(
+  "GEOID", "child_poverty_diff_count", "child_poverty_diff_count_moe"
+)
+merge_list[[merge_index]] = puma_child_poverty_diff_counts
+merge_index = merge_index + 1
+
+puma_child_poverty_diff_percents = svyby(
+  ~I(SPMPOV_LESS_SNAP_LESS_MED-SPMPOV),
+  FUN=svymean,
+  by=~PUMA_GEOID,
+  child_svy,
+)
+puma_child_poverty_diff_percents$se =
+  puma_child_poverty_diff_percents$se * qnorm(0.975) # SE to 95% MOE
+names(puma_child_poverty_diff_percents) = c(
+  "GEOID", "child_poverty_diff_percent", "child_poverty_diff_percent_moe"
+)
+merge_list[[merge_index]] = puma_child_poverty_diff_percents
+merge_index = merge_index + 1
+
 ## Baseline youth
 puma_youth_poverty_counts = svyby(
   ~SPMPOV,
@@ -394,6 +423,35 @@ names(puma_youth_poverty_snap_med_percents) = c(
   "GEOID", "youth_poverty_snap_med_percent", "youth_poverty_snap_med_percent_moe"
 )
 merge_list[[merge_index]] = puma_youth_poverty_snap_med_percents
+merge_index = merge_index + 1
+
+## Difference from baseline and both SNAP and Medicaid work requirements youth
+puma_youth_poverty_diff_counts = svyby(
+  ~I(SPMPOV_LESS_SNAP_LESS_MED-SPMPOV),
+  FUN=svytotal,
+  by=~PUMA_GEOID,
+  youth_svy,
+)
+puma_youth_poverty_diff_counts$se =
+  puma_youth_poverty_diff_counts$se * qnorm(0.975) # SE to 95% MOE
+names(puma_youth_poverty_diff_counts) = c(
+  "GEOID", "youth_poverty_diff_count", "youth_poverty_diff_count_moe"
+)
+merge_list[[merge_index]] = puma_youth_poverty_diff_counts
+merge_index = merge_index + 1
+
+puma_youth_poverty_diff_percents = svyby(
+  ~I(SPMPOV_LESS_SNAP_LESS_MED-SPMPOV),
+  FUN=svymean,
+  by=~PUMA_GEOID,
+  youth_svy,
+)
+puma_youth_poverty_diff_percents$se =
+  puma_youth_poverty_diff_percents$se * qnorm(0.975) # SE to 95% MOE
+names(puma_youth_poverty_diff_percents) = c(
+  "GEOID", "youth_poverty_diff_percent", "youth_poverty_diff_percent_moe"
+)
+merge_list[[merge_index]] = puma_youth_poverty_diff_percents
 merge_index = merge_index + 1
 
 # Merge
