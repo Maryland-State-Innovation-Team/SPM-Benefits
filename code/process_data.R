@@ -23,7 +23,7 @@ setwd("C:/git/SPM-Benefits/")
 # - Usual hours worked per week
 # - Head of household age (18 to 64)
 # - Head of household disability status
-# - Children age (6 or younger)
+# - Children age (14 or younger)
 
 # Poverty Formulas:
 #   SPM_Resources = SPM_Totval +
@@ -54,7 +54,7 @@ acs$DIFF = (
 )
 acs = acs %>%
   group_by(SERIAL) %>%
-  mutate(CHILD6 = any(AGE <= 6) & NCHILD > 0) %>% # Person has their own child in the household, and the household has a child 6 and under
+  mutate(CHILD14 = any(AGE <= 14) & NCHILD > 0) %>% # Person has their own child in the household, and the household has a child 14 and under
   ungroup()
 acs$WORK20 = acs$UHRSWORK >= 20
 
@@ -62,14 +62,14 @@ acs$SNAP_AFFECTED =
   acs$SNAP_RECIPIENT & # Snap recipients
   acs$ADULT & # Aged 18 to 64
   !acs$DIFF & # Without disabilities
-  !acs$CHILD6 & # Without children 6 and younger
+  !acs$CHILD14 & # Without children 14 and younger
   !acs$WORK20 # That don't usually work at least 20 hours per week
 
 acs$MEDICAID_AFFECTED =
   acs$MEDICAID_BENEFICIARY & # Medicaid beneficiaries
   acs$ADULT & # Aged 18 to 64
   !acs$DIFF & # Without disabilities
-  !acs$CHILD6 & # Without children 6 and younger
+  !acs$CHILD14 & # Without children 14 and younger
   !acs$WORK20 # That don't usually work at least 20 hours per week
 
 acs = acs %>%
